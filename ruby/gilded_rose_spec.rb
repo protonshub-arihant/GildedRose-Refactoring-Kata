@@ -114,5 +114,25 @@ describe GildedRose do
         end
       end
     end
+
+    context "Conjured Mana Cake" do
+      it "decreasing quality by 2 and sell in by 1" do
+        items = [Item.new("Conjured Mana Cake", 6, 7)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].to_s).to eq "Conjured Mana Cake, 5, 5"
+      end
+
+      it "decreasing quality to never be less than 0" do
+        items = [Item.new("Conjured Mana Cake", 9, 0)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].to_s).to eq "Conjured Mana Cake, 8, 0"
+      end
+
+      it "decreasing  quality by 4 and sell in value reaches 0" do
+        items = [Item.new("Conjured Mana Cake", 0, 9)]
+        GildedRose.new(items).update_quality()
+        expect(items[0].to_s).to eq "Conjured Mana Cake, -1, 5"
+      end
+    end
   end
 end
